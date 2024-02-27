@@ -2,65 +2,30 @@
 
 namespace App\Policies;
 
-use App\Models\Todo;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Models\Todo;
 
 class TodoPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    public function view(User $user, Todo $todo)
     {
-        //
+        return $user->id === $todo->user_id;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Todo $todo): bool
+    public function update(User $user, Todo $todo)
     {
-        //
+        return $user->id === $todo->user_id;
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function create(User $user)
     {
-        //
+        // Allow users to create todos
+        return true;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Todo $todo): bool
+    public function delete(User $user, Todo $todo)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Todo $todo): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Todo $todo): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Todo $todo): bool
-    {
-        //
+        // Only allow users to delete their own todos
+        return $user->id === $todo->user_id;
     }
 }

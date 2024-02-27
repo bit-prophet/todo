@@ -22,6 +22,8 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('todo', TodoController::class);
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });

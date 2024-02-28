@@ -14,20 +14,20 @@ class TodoCompletedToggled implements ShouldBroadcast
 {
     use Dispatchable, SerializesModels, InteractsWithSockets;
 
-    public $userId;
-    public $todoTitle;
-    public $newCompletedStatus;
+    public $userID;
+    public $todoID;
+    public $completed;
 
-    public function __construct($userId, $todoTitle, $newCompletedStatus)
+    public function __construct($userId, $todoId, $newCompletedStatus)
     {
-        $this->userId = $userId;
-        $this->todoTitle = $todoTitle;
-        $this->newCompletedStatus = $newCompletedStatus;
+        $this->userID = $userId;
+        $this->todoID = $todoId;
+        $this->completed = $newCompletedStatus;
     }
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('user.'.$this->userId);
+        return new PrivateChannel('user.'.$this->userID);
     }
 
     public function broadcastAs(): string

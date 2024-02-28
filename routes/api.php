@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PusherAuthController;
 use App\Http\Controllers\TodoController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -34,3 +35,5 @@ Route::middleware('auth:sanctum')->group(function () {
         return new UserResource($request->user());
     });
 });
+
+Route::post('/pusher/auth', [PusherAuthController::class, 'authenticate']);

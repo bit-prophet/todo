@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TodoCompletedToggled;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
 use App\Http\Resources\TodoResource;
@@ -89,6 +90,9 @@ class TodoController extends Controller
         $todo->update([
             'completed' => !$todo->completed,
         ]);
+
+        // Broadcast event to notify the current user about the status change
+        broadcast(new TodoCompletedToggled(Auth::id(), $todo->title, $todo->completed))->toOthers();
 
         return response()->json([
             'message' => 'Todo completed status toggled successfully',

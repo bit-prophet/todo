@@ -91,8 +91,7 @@ class TodoController extends Controller
             'completed' => !$todo->completed,
         ]);
 
-        // Broadcast event to notify the current user about the status change
-        broadcast(new TodoCompletedToggled(Auth::id(), $todo->title, $todo->completed))->toOthers();
+        // broadcast will be done via observer
 
         return response()->json([
             'message' => 'Todo completed status toggled successfully',

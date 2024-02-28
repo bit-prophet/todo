@@ -22,8 +22,13 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('todo', TodoController::class);
+    // To-do routes
+    Route::apiResource('todos', TodoController::class)->except(['create', 'edit']);
 
+    // Toggle completed route
+    Route::patch('/todos/{todo}/toggle-completed', [TodoController::class, 'toggleCompleted']);
+
+    // User route
     Route::get('/user', function (Request $request) {
         return $request->user();
     });

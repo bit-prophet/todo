@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
 use App\Http\Resources\TodoResource;
 use App\Models\Todo;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -76,5 +77,22 @@ class TodoController extends Controller
         $todo->delete();
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Toggle the completed status of the specified to-do.
+     */
+    public function toggleCompleted(Request $request, Todo $todo): JsonResponse
+    {
+        $this->authorize('update', $todo);
+
+        $todo->update([
+            'completed' => !$todo->completed,
+        ]);
+
+        return response()->json([
+            'message' => 'Todo completed status toggled successfully',
+            'todo' => new TodoResource($todo)
+        ]);
     }
 }

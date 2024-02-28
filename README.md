@@ -33,7 +33,7 @@
     php artisan key:generate
     ```
 
-5. Create a copy of the `.env.example` file and rename it to `.env`. Update the database configuration in the `.env` file with your MySQL credentials.
+5. Create a copy of the `.env.example` file and rename it to `.env`. Update the database configuration in the `.env` file with your MySQL credentials. Also fill `Pusher` configs to use broadcasting.
 
 6. Run database migrations and seed the database with sample data:
 
